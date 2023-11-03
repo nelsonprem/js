@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Swapper</title>
+    <style>
+        /* Add some basic styling for buttons */
+        button {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Buttons with onclick event to trigger the swap function -->
+<button onclick="swapButtons(1)">1</button>
+<button onclick="swapButtons(2)">2</button>
+<button onclick="swapButtons(3)">3</button>
+
+<script>
+    
+    function swapButtons(buttonNumber) {
+        // Find the button element
+        var button = document.querySelector('button:contains("' + buttonNumber + '")');
+
+        // Get the parent container
+        var container = button.parentElement;
+
+        // Get the index of the button in the container
+        var index = Array.from(container.children).indexOf(button);
+
+        // Check if there is an upper neighbor
+        if (index > 0) {
+            // Swap with the upper neighbor
+            container.insertBefore(button, container.children[index - 1]);
+        } else {
+            // Swap with the below neighbor
+            container.insertBefore(button, container.children[index + 2]);
+        }
+    }
+
+    /**
+     * Custom :contains() selector for finding the button with a specific text content.
+     */
+    jQuery.expr[':'].contains = function (a, i, m) {
+        return jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
+    };
+</script>
+
+</body>
+</html>
